@@ -3,7 +3,7 @@ import { Row } from '../../../Shared/Grid';
 import { Text } from '../../../Shared/Text';
 
 const Banner: React.FC = () => {
-    return <Row height={5} >
+    return <Row height={10} >
         <div style={{
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
