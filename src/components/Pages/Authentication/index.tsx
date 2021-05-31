@@ -7,7 +7,6 @@ const Authentication: React.FC = () => {
     
     const { signed } = useAuth();
 
-
     return (
         <div>
             {signed ? <LogOut /> : <Login />}
