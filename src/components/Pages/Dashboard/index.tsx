@@ -7,6 +7,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { AppBar, IconButton, Toolbar, Typography, Drawer, Divider, Container, Grid } from '@material-ui/core';
 import Authentication from '../Authentication';
 import ProductItem from './ProductItem';
+import { IProduct } from '../../../interfaces/Products/Product';
 
 const Home: React.FC = () => {
 
@@ -122,6 +123,8 @@ const Home: React.FC = () => {
 
   const [open, setOpen] = React.useState(true);
 
+  const [product, setProduct] = React.useState<IProduct[] | []>([]);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -129,16 +132,15 @@ const Home: React.FC = () => {
     setOpen(false);
   };
 
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
-  const fetchMyAPI = useCallback(async () => {
-    await productService.findAll()
+  const findProducts = useCallback(async () => {
+    let response = await productService.findAll()
+    setProduct(response)
   }, []);
 
   useEffect(() => {
-    fetchMyAPI()
-  }, [fetchMyAPI])
-  const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    findProducts()
+  }, [findProducts])
+
   return (
     <div className={classes.root}>
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -163,33 +165,34 @@ const Home: React.FC = () => {
         }}
         open={open}
       >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
+        {signed ?
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          : ''}
         <Divider />
         <Authentication />
       </Drawer>
       <main>
-        {/* Hero unit */}
+        
         <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Produtos
-            </Typography>
-          </Container>
+          
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <ProductItem key={card} />
-            ))}
+          
+          <Grid container spacing={5}>
+            {product.map(({ name, price }: IProduct) => {
+              return <ProductItem
+                name={name}
+                price={price}
+              />
+            })}
+
           </Grid>
         </Container>
       </main>
-
     </div>
   );
 };
