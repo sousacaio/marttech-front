@@ -5,11 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { AppBar, IconButton, Toolbar, Typography, Drawer, Divider, Box, Container, Grid, Paper } from '@material-ui/core';
-import Login from '../Login';
+import Authentication from '../Authentication';
 
 const Home: React.FC = () => {
 
-  const { Logout, signed, user } = useAuth();
+  const { signed, user } = useAuth();
 
   const drawerWidth = 240;
 
@@ -143,8 +143,7 @@ const Home: React.FC = () => {
           </IconButton>
         </div>
         <Divider />
-        <Login />
-        <button onClick={Logout} >Deslogar</button>
+        <Authentication />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
