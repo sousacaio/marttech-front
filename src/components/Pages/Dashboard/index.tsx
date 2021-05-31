@@ -4,8 +4,9 @@ import productService from '../../../services/productService';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { AppBar, IconButton, Toolbar, Typography, Drawer, Divider, Box, Container, Grid, Paper } from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography, Drawer, Divider, Container, Grid } from '@material-ui/core';
 import Authentication from '../Authentication';
+import ProductItem from './ProductItem';
 
 const Home: React.FC = () => {
 
@@ -90,6 +91,31 @@ const Home: React.FC = () => {
     fixedHeight: {
       height: 240,
     },
+    icon: {
+      marginRight: theme.spacing(2),
+    },
+    heroContent: {
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(8, 0, 6),
+    },
+    heroButtons: {
+      marginTop: theme.spacing(4),
+    },
+    cardGrid: {
+      paddingTop: theme.spacing(8),
+      paddingBottom: theme.spacing(8),
+    },
+    card: {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    cardMedia: {
+      paddingTop: '56.25%', // 16:9
+    },
+    cardContent: {
+      flexGrow: 1,
+    },
   }));
 
   const classes = useStyles();
@@ -112,7 +138,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetchMyAPI()
   }, [fetchMyAPI])
-
+  const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <div className={classes.root}>
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -145,34 +171,25 @@ const Home: React.FC = () => {
         <Divider />
         <Authentication />
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-
-              </Paper>
-            </Grid>
+      <main>
+        {/* Hero unit */}
+        <div className={classes.heroContent}>
+          <Container maxWidth="sm">
+            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+              Produtos
+            </Typography>
+          </Container>
+        </div>
+        <Container className={classes.cardGrid} maxWidth="md">
+          {/* End hero unit */}
+          <Grid container spacing={4}>
+            {cards.map((card) => (
+              <ProductItem key={card} />
+            ))}
           </Grid>
-          <Box pt={4}>
-
-          </Box>
         </Container>
       </main>
+
     </div>
   );
 };
