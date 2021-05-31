@@ -1,20 +1,18 @@
 import React from 'react';
 import { useAuth } from '../../../contexts/auth';
+import Login from './LogIn';
+import LogOut from './LogOut';
 
-const Login: React.FC = () => {
-    const { Login } = useAuth();
+const Authentication: React.FC = () => {
+    
+    const { signed } = useAuth();
 
-    async function handleLogin() {
-        await Login({
-            email: 'frias.caio@yahoo.com.br',
-            password: '123456',
-        });
-    }
+
     return (
         <div>
-            <button onClick={handleLogin}>Login</button>
+            {signed ? <LogOut /> : <Login />}
         </div>
     );
 };
 
-export default Login;
+export default Authentication;
