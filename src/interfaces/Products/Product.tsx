@@ -1,8 +1,7 @@
 import { IUser } from "../User";
 
 export interface IProduct {
-    id?: number;
-    email: string;
+    id?: number;    
     name: string;
     price: number;
     createdAt: Date;

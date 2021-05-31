@@ -4,8 +4,10 @@ import productService from '../../../services/productService';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { AppBar, IconButton, Toolbar, Typography, Drawer, Divider, Box, Container, Grid, Paper } from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography, Drawer, Divider, Container, Grid } from '@material-ui/core';
 import Authentication from '../Authentication';
+import ProductItem from './ProductItem';
+import { IProduct } from '../../../interfaces/Products/Product';
 
 const Home: React.FC = () => {
 
@@ -90,11 +92,38 @@ const Home: React.FC = () => {
     fixedHeight: {
       height: 240,
     },
+    icon: {
+      marginRight: theme.spacing(2),
+    },
+    heroContent: {
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(8, 0, 6),
+    },
+    heroButtons: {
+      marginTop: theme.spacing(4),
+    },
+    cardGrid: {
+      paddingTop: theme.spacing(8),
+      paddingBottom: theme.spacing(8),
+    },
+    card: {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    cardMedia: {
+      paddingTop: '56.25%', // 16:9
+    },
+    cardContent: {
+      flexGrow: 1,
+    },
   }));
 
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(true);
+
+  const [product, setProduct] = React.useState<IProduct[] | []>([]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -103,15 +132,14 @@ const Home: React.FC = () => {
     setOpen(false);
   };
 
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
-  const fetchMyAPI = useCallback(async () => {
-    await productService.findAll()
+  const findProducts = useCallback(async () => {
+    let response = await productService.findAll()
+    setProduct(response)
   }, []);
 
   useEffect(() => {
-    fetchMyAPI()
-  }, [fetchMyAPI])
+    findProducts()
+  }, [findProducts])
 
   return (
     <div className={classes.root}>
@@ -137,40 +165,32 @@ const Home: React.FC = () => {
         }}
         open={open}
       >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
+        {signed ?
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          : ''}
         <Divider />
         <Authentication />
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
+      <main>
+        
+        <div className={classes.heroContent}>
+          
+        </div>
+        <Container className={classes.cardGrid} maxWidth="md">
+          
+          <Grid container spacing={5}>
+            {product.map(({ name, price }: IProduct) => {
+              return <ProductItem
+                name={name}
+                price={price}
+              />
+            })}
 
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-
-              </Paper>
-            </Grid>
           </Grid>
-          <Box pt={4}>
-
-          </Box>
         </Container>
       </main>
     </div>
