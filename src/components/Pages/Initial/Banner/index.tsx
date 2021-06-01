@@ -1,16 +1,23 @@
 import React from 'react';
 import { useAuth } from '../../../../contexts/auth';
 import { Row } from '../../../Shared/Grid';
-import { LoginModal } from '../../../Shared/Modal/login-modal';
+import { LoginModal } from '../../../Shared/Modal/login-modal/login-modal';
+import { useLoginModal } from '../../../Shared/Modal/login-modal/use-login-modal';
+
 import { Modal } from '../../../Shared/Modal/Modal';
-import { useModal } from '../../../Shared/Modal/useModal';
+import { SignUpModal } from '../../../Shared/Modal/signup-modal/signup-modal';
+import { useSignUpModal } from '../../../Shared/Modal/signup-modal/use-login-modal';
 import { Text } from '../../../Shared/Text';
 
 const Banner: React.FC = () => {
-    const { isShown, toggle } = useModal();
-    const { signed, Logout } = useAuth()
-    const onConfirm = () => toggle();
-    const onCancel = () => toggle();
+    const { signed, user, Logout } = useAuth()
+    const { isLoginModalShown, toggleLoginModal } = useLoginModal()
+    const onConfirmLogin = () => toggleLoginModal();
+    const onCancelLogin = () => toggleLoginModal();
+
+    const { isSignUpModalShown, toggleSignUpModal } = useSignUpModal()
+    const onConfirmSignUp = () => toggleSignUpModal();
+    const onCancelSignUp = () => toggleSignUpModal();
 
     return <Row height={10} >
         <div style={{
@@ -28,23 +35,40 @@ const Banner: React.FC = () => {
                     display: 'flex',
                     justifyContent: 'space-around'
                 }}>
-                    <Text color="white" size={20}>Marttech</Text>
                     {signed ?
-                        <>
-                            <Text color="white" onClick={Logout} size={20}>Logout</Text>
-                        </>
+                        <Text color="white" size={20}>Olá {user?.email}!</Text>
+                        : <Text color="white" size={20}>Marttech</Text>}
+                    {signed ?
+                        <></>
+                        : <>
+                            <Text color="white" onClick={toggleSignUpModal} size={20}>Cadastre-se!</Text>
+                            <Modal
+                                isShown={isSignUpModalShown}
+                                hide={toggleSignUpModal}
+                                headerText="Cadastro"
+                                modalContent={
+                                    <SignUpModal
+                                        onConfirm={onConfirmSignUp}
+                                        onCancel={onCancelSignUp}
+                                        message=""
+                                    />
+                                }
+                            />
+                        </>}
+                    {signed ?
+                        <Text color="white" onClick={Logout} size={20}>Logout</Text>
                         :
                         <>
-                            <Text color="white" onClick={toggle} size={20}>Login</Text>
+                            <Text color="white" onClick={toggleLoginModal} size={20}>Login</Text>
 
                             <Modal
-                                isShown={isShown}
-                                hide={toggle}
+                                isShown={isLoginModalShown}
+                                hide={toggleLoginModal}
                                 headerText="Login"
                                 modalContent={
                                     <LoginModal
-                                        onConfirm={onConfirm}
-                                        onCancel={onCancel}
+                                        onConfirm={onConfirmLogin}
+                                        onCancel={onCancelLogin}
                                         message=""
                                     />
                                 }

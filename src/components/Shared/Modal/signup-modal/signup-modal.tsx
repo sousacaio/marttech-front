@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { Row } from '../Grid';
-import { ConfirmationButtons, Message, YesButton, NoButton, SendButton } from './confirmation-modal.style';
+import { Row } from '../../Grid';
+import { ConfirmationButtons, Message, YesButton, NoButton, SendButton } from '../confirmation-modal.style';
 import {
     Formik,
     FormikHelpers,
@@ -10,34 +10,35 @@ import {
     validateYupSchema,
 } from 'formik';
 import * as yup from 'yup';
-import { LoginCredentials } from '../../../interfaces/Auth/LoginCredentials';
-import { useAuth } from '../../../contexts/auth';
-import { FormGroup, Input, Label } from '../Forms';
+import { useAuth } from '../../../../contexts/auth';
+import { FormGroup, Input, Label } from '../../Forms';
+import { SignUpUser } from '../../../../interfaces/Auth/Signup';
 
 
-interface LoginModalProps {
+interface SignUpModalProps {
     onConfirm: () => void;
     onCancel: () => void;
     message: string;
 }
-export const LoginModal: FunctionComponent<LoginModalProps> = (props) => {
-    const { Login, signed } = useAuth()
+export const SignUpModal: FunctionComponent<SignUpModalProps> = (props) => {
+    const { SignUp } = useAuth()
     const validationSchema = yup.object({
         email: yup
             .string()
-            .email('Enter a valid email')
-            .required('Email is required'),
+            .email('Formato de email inválido!')
+            .required('O campo email está vazio'),
         password: yup
             .string()
-            .min(6, 'Password should be of minimum 8 characters length')
-            .required('Password is required'),
+            .min(6, 'A senha precisa de pelo menos 6 caracteres')
+            .required('O campo senha está vazio'),
+        name: yup
+            .string()
+            .min(2, 'O nome precisa ter pelo menos duas letras!')
+            .required('O campo nome está vazio'),
     });
 
-    async function handleLogin(values: LoginCredentials) {
-        await Login(values);
-    }
-    if (signed) {
-        props.onConfirm()
+    async function handleSignUp(values: SignUpUser) {
+        await SignUp(values)
     }
 
     return (
@@ -46,9 +47,9 @@ export const LoginModal: FunctionComponent<LoginModalProps> = (props) => {
             <Row width={10} height={10}>
                 <div>
                     <Formik
-                        initialValues={{ email: '', password: '' } as LoginCredentials}
+                        initialValues={{ email: '', password: '', name: '' } as SignUpUser}
                         onSubmit={async (values) => {
-                            await handleLogin(values)
+                            await handleSignUp(values)
                         }}
                         validationSchema={validationSchema}
                     >{({ errors,
@@ -71,6 +72,7 @@ export const LoginModal: FunctionComponent<LoginModalProps> = (props) => {
                             <FormGroup>
                                 <Label>Senha </Label>
                                 <Input name="password"
+                                    type="password"
                                     onChange={handleChange}
                                     value={values.password}
                                     onBlur={handleBlur}
@@ -79,8 +81,19 @@ export const LoginModal: FunctionComponent<LoginModalProps> = (props) => {
                                     <Message>{errors.password}</Message>
                                 ) : null}
                             </FormGroup>
+                            <FormGroup>
+                                <Label>Nome </Label>
+                                <Input name="name"
+                                    onChange={handleChange}
+                                    value={values.name}
+                                    onBlur={handleBlur}
+                                />
+                                {errors.name && touched.name ? (
+                                    <Message>{errors.name}</Message>
+                                ) : null}
+                            </FormGroup>
                             <ConfirmationButtons>
-                                <SendButton type="submit" >Logar</SendButton>
+                                <SendButton type="submit" >Cadastrar!</SendButton>
                             </ConfirmationButtons>
                         </Form>
                     )}
