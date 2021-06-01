@@ -2,13 +2,14 @@ import React from 'react';
 import { useAuth } from '../../../../contexts/auth';
 import { Row } from '../../../Shared/Grid';
 import { LoginModal } from '../../../Shared/Modal/login-modal';
+
 import { Modal } from '../../../Shared/Modal/Modal';
 import { useModal } from '../../../Shared/Modal/useModal';
 import { Text } from '../../../Shared/Text';
 
 const Banner: React.FC = () => {
     const { isShown, toggle } = useModal();
-    const { signed, Logout } = useAuth()
+    const { signed, user, Logout } = useAuth()
     const onConfirm = () => toggle();
     const onCancel = () => toggle();
 
@@ -28,7 +29,9 @@ const Banner: React.FC = () => {
                     display: 'flex',
                     justifyContent: 'space-around'
                 }}>
-                    <Text color="white" size={20}>Marttech</Text>
+                    {signed ?
+                        <Text color="white" size={20}>Olá {user?.email}!</Text>
+                        : <Text color="white" size={20}>Marttech</Text>}
                     {signed ?
                         <>
                             <Text color="white" onClick={Logout} size={20}>Logout</Text>
