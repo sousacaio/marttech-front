@@ -16,9 +16,10 @@ const ProductCard: React.FC<ProductCardProps> = (props): JSX.Element => {
         <div style={{
             display: 'flex', background: '#FFFFFF', overflow: 'auto',
             width: '30%',
+            height:'40vh',
             margin: 10,
         }}>
-            <Row width={10} style={{ background: 'red', borderRadius: 10, }}>
+            <Row width={10}  style={{ background: 'red', borderRadius: 10, }}>
                 <div style={{
                     borderRadius: 10,
                     width: '100%',
