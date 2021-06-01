@@ -1,13 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { Row } from '../../Grid';
-import { ConfirmationButtons, Message, YesButton, NoButton, SendButton } from '../confirmation-modal.style';
+import { ConfirmationButtons, Message, SendButton } from '../confirmation-modal.style';
 import {
     Formik,
-    FormikHelpers,
-    FormikProps,
-    Form,
-    Field,
-    validateYupSchema,
+    Form
 } from 'formik';
 import * as yup from 'yup';
 import { useAuth } from '../../../../contexts/auth';

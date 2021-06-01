@@ -1,4 +1,4 @@
-import { SignUpUser } from "../interfaces/Auth/Signup";
+import { SignUpUser } from "../interfaces/Auth/SignupInterface";
 import { IUser } from "../interfaces/User/User";
 import apiService, { ApiService } from "./apiService";
 import Swal from 'sweetalert2';
@@ -9,7 +9,7 @@ class UserService {
     constructor(private apiService: ApiService) { }
     async create(credentials: SignUpUser): Promise<IUser> {
         let res = await this.apiService.post('/users', credentials)
-        console.log(res)
+        
         if (res.data.message === 'Email already in use') {
             MySwal.fire({
                 title: 'Email em uso!',

@@ -5,8 +5,8 @@ import { LoginModal } from '../../../Shared/Modal/login-modal/login-modal';
 import { useLoginModal } from '../../../Shared/Modal/login-modal/use-login-modal';
 
 import { Modal } from '../../../Shared/Modal/Modal';
-import { SignUpModal } from '../../../Shared/Modal/signup-modal/signup-modal';
 import { useSignUpModal } from '../../../Shared/Modal/signup-modal/use-login-modal';
+import { SignUpModal } from '../../../Shared/Modal/signup-modal/signup-modal';
 import { Text } from '../../../Shared/Text';
 
 const Banner: React.FC = () => {
