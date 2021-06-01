@@ -1,11 +1,11 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { LoginCredentials } from '../interfaces/Auth/LoginCredentials';
-import { SignUpUser } from '../interfaces/Auth/SignupInterface';
-import { IUser } from '../interfaces/User/User';
+import { LoginCredentials } from '../../interfaces/Auth/LoginCredentials';
+import { SignUpUser } from '../../interfaces/Auth/SignupInterface';
+import { IUser } from '../../interfaces/User/User';
 
-import * as api from '../services/api';
-import authService from '../services/authService';
-import userService from '../services/user-service';
+import * as api from '../../services/api';
+import authService from '../../services/authService';
+import userService from '../../services/user-service';
 
 interface AuthContextData {
   signed: boolean;

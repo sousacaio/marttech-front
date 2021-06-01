@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../../../../contexts/auth';
+import { useAuth } from '../../../../contexts/auth/auth';
 import { Row } from '../../../Shared/Grid';
 import { Text } from '../../../Shared/Text';
 import InfoIcon from '@material-ui/icons/Info';

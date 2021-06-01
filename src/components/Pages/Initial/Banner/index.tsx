@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../../../../contexts/auth';
+import { useAuth } from '../../../../contexts/auth/auth';
 import { Row } from '../../../Shared/Grid';
 import { LoginModal } from '../../../Shared/Modal/login-modal/login-modal';
 import { useLoginModal } from '../../../Shared/Modal/login-modal/use-login-modal';

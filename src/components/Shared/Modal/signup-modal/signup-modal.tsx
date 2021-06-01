@@ -6,7 +6,7 @@ import {
     Form
 } from 'formik';
 import * as yup from 'yup';
-import { useAuth } from '../../../../contexts/auth';
+import { useAuth } from '../../../../contexts/auth/auth';
 import { FormGroup, Input, Label } from '../../Forms';
 import { SignUpUser } from '../../../../interfaces/Auth/SignupInterface';
 
