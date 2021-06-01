@@ -8,7 +8,7 @@ import {
 import * as yup from 'yup';
 import { useAuth } from '../../../../contexts/auth';
 import { FormGroup, Input, Label } from '../../Forms';
-import { SignUpUser } from '../../../../interfaces/Auth/Signup';
+import { SignUpUser } from '../../../../interfaces/Auth/SignupInterface';
 
 
 interface SignUpModalProps {
